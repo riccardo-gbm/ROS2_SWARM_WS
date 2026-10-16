@@ -1,0 +1,3 @@
+[console_scripts]
+first_flight = swarm_nodes.first_flight:main
+link_monitor = swarm_nodes.link_monitor:main
