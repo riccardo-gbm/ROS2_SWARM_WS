@@ -7,6 +7,7 @@ setup.py
 ../../build/swarm_bringup/swarm_bringup.egg-info/requires.txt
 ../../build/swarm_bringup/swarm_bringup.egg-info/top_level.txt
 ../../build/swarm_bringup/swarm_bringup.egg-info/zip-safe
+config/swarm_pluginlists.yaml
 launch/mavros_x4.launch.py
 resource/swarm_bringup
 swarm_bringup/__init__.py

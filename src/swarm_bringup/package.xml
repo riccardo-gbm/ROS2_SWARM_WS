@@ -10,6 +10,7 @@
   <depend>launch</depend>
   <depend>launch_ros</depend>
   <depend>mavros</depend>
+  <exec_depend>swarm_nodes</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
