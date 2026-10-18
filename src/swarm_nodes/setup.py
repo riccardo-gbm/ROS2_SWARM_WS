@@ -27,6 +27,7 @@ setup(
             'link_monitor = swarm_nodes.link_monitor:main',
             'first_flight = swarm_nodes.first_flight:main',
             'orientation_monitor = swarm_nodes.orientation_monitor:main',
+            'stream_setup = swarm_nodes.stream_setup:main',
         ],
     },
 )
