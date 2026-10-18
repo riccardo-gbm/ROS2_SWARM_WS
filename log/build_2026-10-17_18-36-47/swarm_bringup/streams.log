@@ -1,0 +1,18 @@
+[2.984s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data --force
+[3.574s] running develop
+[3.928s] running egg_info
+[3.964s] writing swarm_bringup.egg-info/PKG-INFO
+[3.964s] writing dependency_links to swarm_bringup.egg-info/dependency_links.txt
+[3.965s] writing requirements to swarm_bringup.egg-info/requires.txt
+[3.965s] writing top-level names to swarm_bringup.egg-info/top_level.txt
+[4.038s] reading manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[4.039s] writing manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[4.077s] running build_ext
+[4.077s] Creating /home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.12/site-packages/swarm-bringup.egg-link (link to .)
+[4.079s] 
+[4.079s] Installed /home/a/ROS2_SWARM_WS/build/swarm_bringup
+[4.079s] running symlink_data
+[4.079s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/resource/swarm_bringup -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/ament_index/resource_index/packages
+[4.080s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/package.xml -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup
+[4.080s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/launch/mavros_x4.launch.py -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/launch
+[4.135s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data --force

@@ -1,0 +1,22 @@
+[2.960s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data --force
+[3.581s] running develop
+[3.950s] running egg_info
+[3.987s] writing swarm_nodes.egg-info/PKG-INFO
+[3.988s] writing dependency_links to swarm_nodes.egg-info/dependency_links.txt
+[3.988s] writing entry points to swarm_nodes.egg-info/entry_points.txt
+[3.989s] writing requirements to swarm_nodes.egg-info/requires.txt
+[3.989s] writing top-level names to swarm_nodes.egg-info/top_level.txt
+[4.063s] reading manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+[4.064s] writing manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+[4.105s] running build_ext
+[4.105s] Creating /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.12/site-packages/swarm-nodes.egg-link (link to .)
+[4.106s] Installing fetch_pose script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[4.107s] Installing first_flight script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[4.107s] Installing link_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[4.107s] Installing orientation_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[4.108s] 
+[4.108s] Installed /home/a/ROS2_SWARM_WS/build/swarm_nodes
+[4.108s] running symlink_data
+[4.108s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_nodes/resource/swarm_nodes -> /home/a/ROS2_SWARM_WS/install/swarm_nodes/share/ament_index/resource_index/packages
+[4.108s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_nodes/package.xml -> /home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes
+[4.166s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data --force

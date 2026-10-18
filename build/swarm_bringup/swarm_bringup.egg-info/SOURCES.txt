@@ -11,6 +11,9 @@ config/swarm_pluginlists.yaml
 launch/mavros_x4.launch.py
 resource/swarm_bringup
 swarm_bringup/__init__.py
-test/test_copyright.py
-test/test_flake8.py
-test/test_pep257.py
+swarm_bringup.egg-info/PKG-INFO
+swarm_bringup.egg-info/SOURCES.txt
+swarm_bringup.egg-info/dependency_links.txt
+swarm_bringup.egg-info/requires.txt
+swarm_bringup.egg-info/top_level.txt
+swarm_bringup.egg-info/zip-safe

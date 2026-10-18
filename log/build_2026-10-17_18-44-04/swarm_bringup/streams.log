@@ -1,0 +1,15 @@
+[2.476s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data
+[3.068s] running develop
+[3.425s] running egg_info
+[3.460s] writing swarm_bringup.egg-info/PKG-INFO
+[3.461s] writing dependency_links to swarm_bringup.egg-info/dependency_links.txt
+[3.461s] writing requirements to swarm_bringup.egg-info/requires.txt
+[3.461s] writing top-level names to swarm_bringup.egg-info/top_level.txt
+[3.533s] reading manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[3.534s] writing manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[3.572s] running build_ext
+[3.572s] Creating /home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.12/site-packages/swarm-bringup.egg-link (link to .)
+[3.573s] 
+[3.573s] Installed /home/a/ROS2_SWARM_WS/build/swarm_bringup
+[3.573s] running symlink_data
+[3.637s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data
