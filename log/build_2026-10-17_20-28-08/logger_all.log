@@ -1,0 +1,185 @@
+[0.125s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.126s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7f0fc46810f0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f0fc478a320>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f0fc478a320>>, mixin_verb=('build',))
+[0.448s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.448s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.448s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.448s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.448s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.448s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.448s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/a/ROS2_SWARM_WS'
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.449s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.450s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.450s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.473s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.474s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.474s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.474s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.474s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.474s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.474s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.475s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.475s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.475s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.475s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.476s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.477s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extension 'ignore'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extension 'ignore_ament_install'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extensions ['colcon_pkg']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extension 'colcon_pkg'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extensions ['colcon_meta']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extension 'colcon_meta'
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extensions ['ros']
+[0.478s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_bringup) by extension 'ros'
+[0.483s] DEBUG:colcon.colcon_core.package_identification:Package 'src/swarm_bringup' with type 'ros.ament_python' and name 'swarm_bringup'
+[0.483s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extensions ['ignore', 'ignore_ament_install']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extension 'ignore'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extension 'ignore_ament_install'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extensions ['colcon_pkg']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extension 'colcon_pkg'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extensions ['colcon_meta']
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extension 'colcon_meta'
+[0.484s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extensions ['ros']
+[0.485s] Level 1:colcon.colcon_core.package_identification:_identify(src/swarm_nodes) by extension 'ros'
+[0.486s] DEBUG:colcon.colcon_core.package_identification:Package 'src/swarm_nodes' with type 'ros.ament_python' and name 'swarm_nodes'
+[0.487s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.487s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.487s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.487s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.487s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'cmake_args' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'cmake_target' from command line to 'None'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[0.531s] Level 5:colcon.colcon_core.verb:set package 'swarm_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.531s] DEBUG:colcon.colcon_core.verb:Building package 'swarm_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/a/ROS2_SWARM_WS/build/swarm_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/a/ROS2_SWARM_WS/install/swarm_bringup', 'merge_install': False, 'path': '/home/a/ROS2_SWARM_WS/src/swarm_bringup', 'symlink_install': True, 'test_result_base': None}
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'cmake_args' from command line to 'None'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'cmake_target' from command line to 'None'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'cmake_clean_cache' from command line to 'False'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'cmake_clean_first' from command line to 'False'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'cmake_force_configure' from command line to 'False'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'ament_cmake_args' from command line to 'None'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'catkin_cmake_args' from command line to 'None'
+[0.532s] Level 5:colcon.colcon_core.verb:set package 'swarm_nodes' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.532s] DEBUG:colcon.colcon_core.verb:Building package 'swarm_nodes' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/a/ROS2_SWARM_WS/build/swarm_nodes', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/a/ROS2_SWARM_WS/install/swarm_nodes', 'merge_install': False, 'path': '/home/a/ROS2_SWARM_WS/src/swarm_nodes', 'symlink_install': True, 'test_result_base': None}
+[0.533s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.534s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.535s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/a/ROS2_SWARM_WS/src/swarm_bringup' with build type 'ament_python'
+[0.535s] Level 1:colcon.colcon_core.shell:create_environment_hook('swarm_bringup', 'ament_prefix_path')
+[0.543s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.544s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/hook/ament_prefix_path.ps1'
+[0.545s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/hook/ament_prefix_path.dsv'
+[0.546s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/hook/ament_prefix_path.sh'
+[0.548s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.548s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.558s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/a/ROS2_SWARM_WS/src/swarm_nodes' with build type 'ament_python'
+[0.558s] Level 1:colcon.colcon_core.shell:create_environment_hook('swarm_nodes', 'ament_prefix_path')
+[0.559s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/hook/ament_prefix_path.ps1'
+[0.559s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/hook/ament_prefix_path.dsv'
+[0.560s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/hook/ament_prefix_path.sh'
+[0.561s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.561s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.912s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/a/ROS2_SWARM_WS/src/swarm_bringup'
+[0.912s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.913s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.259s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/a/ROS2_SWARM_WS/src/swarm_nodes'
+[1.260s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.260s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.709s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: upload, build_clib, bdist, sdist, setopt, clean, check, bdist_egg, symlink_data, test, upload_docs, install_lib, develop, build_scripts, easy_install, rotate, dist_info, alias, build_ext, install_egg_info, saveopts, egg_info, build, install_scripts, install_data, build_py, register, install_headers, bdist_rpm, bdist_dumb, install
+[1.713s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: upload, build_clib, bdist, sdist, setopt, clean, check, bdist_egg, symlink_data, test, upload_docs, install_lib, develop, build_scripts, easy_install, rotate, dist_info, alias, build_ext, install_egg_info, saveopts, egg_info, build, install_scripts, install_data, build_py, register, install_headers, bdist_rpm, bdist_dumb, install
+[2.070s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --upgrade, --editable, --no-user-cfg, --allow-hosts, --prefix, --force-installation-into-system-dir, --verbose, --optimize, --build-directory, --no-deps, --exclude-scripts, --uninstall, --always-unzip, --egg-path, --script-dir, --install-dir, --index-url, --quiet, --local-snapshots-ok, --install-layout, --multi-version, --help, --zip-ok, --no-find-links, --user, --record, --site-dirs, --version, --find-links, --always-copy, --dry-run
+[2.073s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data
+[2.079s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --upgrade, --editable, --no-user-cfg, --allow-hosts, --prefix, --force-installation-into-system-dir, --verbose, --optimize, --build-directory, --no-deps, --exclude-scripts, --uninstall, --always-unzip, --egg-path, --script-dir, --install-dir, --index-url, --quiet, --local-snapshots-ok, --install-layout, --multi-version, --help, --zip-ok, --no-find-links, --user, --record, --site-dirs, --version, --find-links, --always-copy, --dry-run
+[2.082s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data
+[2.654s] Level 1:colcon.colcon_core.shell:create_environment_hook('swarm_nodes', 'pythonpath_develop')
+[2.655s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/build/swarm_nodes/share/swarm_nodes/hook/pythonpath_develop.ps1'
+[2.655s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes' returned '0': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data
+[2.656s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/a/ROS2_SWARM_WS/build/swarm_nodes/share/swarm_nodes/hook/pythonpath_develop.dsv'
+[2.657s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/build/swarm_nodes/share/swarm_nodes/hook/pythonpath_develop.sh'
+[2.666s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes' for CMake module files
+[2.667s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes' for CMake config files
+[2.669s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib'
+[2.670s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes/bin'
+[2.670s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/pkgconfig/swarm_nodes.pc'
+[2.670s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages'
+[2.671s] Level 1:colcon.colcon_core.shell:create_environment_hook('swarm_nodes', 'pythonpath')
+[2.671s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/hook/pythonpath.ps1'
+[2.672s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/hook/pythonpath.dsv'
+[2.673s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/hook/pythonpath.sh'
+[2.674s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_nodes/bin'
+[2.674s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(swarm_nodes)
+[2.675s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/package.ps1'
+[2.678s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/package.dsv'
+[2.679s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/package.sh'
+[2.681s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/package.bash'
+[2.683s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/swarm_nodes/package.zsh'
+[2.686s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/a/ROS2_SWARM_WS/install/swarm_nodes/share/colcon-core/packages/swarm_nodes)
+[2.687s] Level 1:colcon.colcon_core.shell:create_environment_hook('swarm_bringup', 'pythonpath_develop')
+[2.688s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/build/swarm_bringup/share/swarm_bringup/hook/pythonpath_develop.ps1'
+[2.689s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup' returned '0': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data
+[2.690s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/a/ROS2_SWARM_WS/build/swarm_bringup/share/swarm_bringup/hook/pythonpath_develop.dsv'
+[2.690s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/build/swarm_bringup/share/swarm_bringup/hook/pythonpath_develop.sh'
+[2.692s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup' for CMake module files
+[2.693s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup' for CMake config files
+[2.693s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib'
+[2.694s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup/bin'
+[2.694s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/pkgconfig/swarm_bringup.pc'
+[2.694s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages'
+[2.694s] Level 1:colcon.colcon_core.shell:create_environment_hook('swarm_bringup', 'pythonpath')
+[2.694s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/hook/pythonpath.ps1'
+[2.695s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/hook/pythonpath.dsv'
+[2.696s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/hook/pythonpath.sh'
+[2.697s] Level 1:colcon.colcon_core.environment:checking '/home/a/ROS2_SWARM_WS/install/swarm_bringup/bin'
+[2.697s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(swarm_bringup)
+[2.697s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/package.ps1'
+[2.698s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/package.dsv'
+[2.699s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/package.sh'
+[2.700s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/package.bash'
+[2.700s] INFO:colcon.colcon_core.shell:Creating package script '/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/package.zsh'
+[2.701s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/a/ROS2_SWARM_WS/install/swarm_bringup/share/colcon-core/packages/swarm_bringup)
+[2.701s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[2.701s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[2.702s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[2.702s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[2.731s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[2.731s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[2.731s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[2.731s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[2.815s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[2.815s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/a/ROS2_SWARM_WS/install/local_setup.ps1'
+[2.817s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/a/ROS2_SWARM_WS/install/_local_setup_util_ps1.py'
+[2.820s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/a/ROS2_SWARM_WS/install/setup.ps1'
+[2.823s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/a/ROS2_SWARM_WS/install/local_setup.sh'
+[2.824s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/a/ROS2_SWARM_WS/install/_local_setup_util_sh.py'
+[2.825s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/a/ROS2_SWARM_WS/install/setup.sh'
+[2.827s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/a/ROS2_SWARM_WS/install/local_setup.bash'
+[2.828s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/a/ROS2_SWARM_WS/install/setup.bash'
+[2.829s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/a/ROS2_SWARM_WS/install/local_setup.zsh'
+[2.830s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/a/ROS2_SWARM_WS/install/setup.zsh'
