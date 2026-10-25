@@ -1,0 +1,19 @@
+running develop
+running egg_info
+writing swarm_nodes.egg-info/PKG-INFO
+writing dependency_links to swarm_nodes.egg-info/dependency_links.txt
+writing entry points to swarm_nodes.egg-info/entry_points.txt
+writing requirements to swarm_nodes.egg-info/requires.txt
+writing top-level names to swarm_nodes.egg-info/top_level.txt
+reading manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+writing manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages/swarm-nodes.egg-link (link to .)
+Installing fetch_pose = swarm_nodes.fetch_pose:mainstream_setup script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+Installing first_flight script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+Installing link_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+Installing orientation_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+Installing teleop_velocity script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+
+Installed /home/a/ROS2_SWARM_WS/build/swarm_nodes
+running symlink_data

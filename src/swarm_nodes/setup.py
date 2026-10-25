@@ -29,6 +29,7 @@ setup(
             'orientation_monitor = swarm_nodes.orientation_monitor:main',
             'fetch_pose = swarm_nodes.fetch_pose:main'
             'stream_setup = swarm_nodes.stream_setup:main',
+            "teleop_velocity = swarm_nodes.teleop_velocity:main"
         ],
     },
 )

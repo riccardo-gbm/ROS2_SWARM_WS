@@ -1,0 +1,20 @@
+[1.305s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup': AMENT_PREFIX_PATH=/home/a/ROS2_SWARM_WS/install/swarm_nodes:${AMENT_PREFIX_PATH} PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages:/home/a/ROS2_SWARM_WS/build/swarm_nodes:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data --force
+[1.691s] running develop
+[1.904s] running egg_info
+[1.904s] writing swarm_bringup.egg-info/PKG-INFO
+[1.905s] writing dependency_links to swarm_bringup.egg-info/dependency_links.txt
+[1.905s] writing entry points to swarm_bringup.egg-info/entry_points.txt
+[1.905s] writing requirements to swarm_bringup.egg-info/requires.txt
+[1.906s] writing top-level names to swarm_bringup.egg-info/top_level.txt
+[1.909s] reading manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[1.911s] writing manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[1.913s] running build_ext
+[1.913s] Creating /home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages/swarm-bringup.egg-link (link to .)
+[1.915s] 
+[1.915s] Installed /home/a/ROS2_SWARM_WS/build/swarm_bringup
+[1.916s] running symlink_data
+[1.916s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/resource/swarm_bringup -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/ament_index/resource_index/packages
+[1.916s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/package.xml -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup
+[1.916s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/launch/mavros_x4.launch.py -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/launch
+[1.916s] symbolically linking /home/a/ROS2_SWARM_WS/build/swarm_bringup/config/swarm_pluginlists.yaml -> /home/a/ROS2_SWARM_WS/install/swarm_bringup/share/swarm_bringup/config
+[1.966s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup' returned '0': AMENT_PREFIX_PATH=/home/a/ROS2_SWARM_WS/install/swarm_nodes:${AMENT_PREFIX_PATH} PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages:/home/a/ROS2_SWARM_WS/build/swarm_nodes:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data --force

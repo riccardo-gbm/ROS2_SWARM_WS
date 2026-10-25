@@ -1,18 +1,1 @@
-/**:
-  ros__parameters:
-    # Deny everything, then allow only what the platform uses.
-    # (In MAVROS the allowlist overrides the denylist.)
-    plugin_denylist:
-      - '*'
-    plugin_allowlist:
-      - sys_status
-      - sys_time
-      - command
-      - imu
-      - local_position
-      - global_position
-      - setpoint_velocity
-      - setpoint_raw
-      - param
-      - gps_rtk
-      - gps_status
+/home/a/ROS2_SWARM_WS/build/swarm_bringup/config/swarm_pluginlists.yaml

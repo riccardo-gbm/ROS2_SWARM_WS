@@ -12,6 +12,11 @@
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>mavros_msgs</depend>
+  <depend>sys</depend>
+  <depend>termios</depend>
+  <depend>tty</depend>
+  <depend>select</depend>
+  <depend>time</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

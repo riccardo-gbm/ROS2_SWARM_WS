@@ -14,12 +14,8 @@ swarm_nodes/fetch_pose.py
 swarm_nodes/first_flight.py
 swarm_nodes/link_monitor.py
 swarm_nodes/orientation_monitor.py
-<<<<<<< HEAD
 swarm_nodes/stream_setup.py
-test/test_copyright.py
-test/test_flake8.py
-test/test_pep257.py
-=======
+swarm_nodes/teleop_velocity.py
 swarm_nodes.egg-info/PKG-INFO
 swarm_nodes.egg-info/SOURCES.txt
 swarm_nodes.egg-info/dependency_links.txt
@@ -27,4 +23,3 @@ swarm_nodes.egg-info/entry_points.txt
 swarm_nodes.egg-info/requires.txt
 swarm_nodes.egg-info/top_level.txt
 swarm_nodes.egg-info/zip-safe
->>>>>>> 84f1eeb (feat: publishing odometry in desired topic at 25Hz)
