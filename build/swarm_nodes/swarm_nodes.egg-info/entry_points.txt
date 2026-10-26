@@ -1,7 +1,0 @@
-[console_scripts]
-first_flight = swarm_nodes.first_flight:main
-link_monitor = swarm_nodes.link_monitor:main
-odom_relay = swarm_nodes.odom_relay:main
-orientation_monitor = swarm_nodes.orientation_monitor:main
-stream_setup = swarm_nodes.stream_setup:main
-teleop_velocity = swarm_nodes.teleop_velocity:main
