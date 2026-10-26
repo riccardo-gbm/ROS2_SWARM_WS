@@ -1,0 +1,13 @@
+# colcon build output
+build/
+install/
+log/
+
+# python
+__pycache__/
+*.pyc
+
+# merge/backup leftovers
+*~HEAD
+*.orig
+*.rej
