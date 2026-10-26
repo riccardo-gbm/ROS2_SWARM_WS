@@ -89,10 +89,16 @@ and listens on port 14555.
 
 - **`swarm_nodes/odom_relay.py`** → `ros2 run swarm_nodes odom_relay`
   Subscribes `/droneN/mavros/local_position/odom` on all four drones and republishes each one on
-  **`/droneN/odom`** — the topic the formation controller subscribes to — at 25 Hz, rewriting
-  `child_frame_id` to `droneN/base_link`. It keeps only the newest pose per drone and clears it
-  after publishing, so a stale pose is never re-sent.
-  Parameters: `namespaces`, `rate_hz`.
+  **`/droneN/odom`** — the topic the formation controller subscribes to — rewriting
+  `child_frame_id` to `droneN/base_link`.
+  Parameters: `namespaces`, `max_rate_hz` (default `0.0`, meaning no limit).
+
+  Every message is forwarded as it arrives, so **the output rate equals the input rate**. The
+  autopilot sets that rate and `stream_setup` requests 25 Hz; this node must not resample it. An
+  earlier version latched the newest pose and published on a 25 Hz timer, which aliased against the
+  25 Hz input and silently lost ~24% of messages (measured 19 Hz out for 25 Hz in). `max_rate_hz`
+  is an optional ceiling for when MAVLink is deliberately streaming faster than `/droneN/odom`
+  needs; it bounds rather than targets, landing at or just below the cap.
 
   **This is a passthrough.** Each pose is still expressed in that drone's own EKF origin, set
   wherever it first got a good GPS fix, so the four frames are not comparable yet. The shared
