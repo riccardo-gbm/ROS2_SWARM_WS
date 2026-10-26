@@ -81,6 +81,35 @@ and listens on port 14555.
   Use it to confirm the four agree and to catch a badly calibrated compass: RTK fixes position but
   not heading, so compass error turns directly into formation yaw error.
 
+- **`swarm_nodes/odom_relay.py`** → `ros2 run swarm_nodes odom_relay`
+  Subscribes `/droneN/mavros/local_position/odom` on all four drones and republishes each one on
+  **`/droneN/odom`** — the topic the formation controller subscribes to — at 25 Hz, rewriting
+  `child_frame_id` to `droneN/base_link`. It keeps only the newest pose per drone and clears it
+  after publishing, so a stale pose is never re-sent.
+  Parameters: `namespaces`, `rate_hz`.
+
+  **This is a passthrough.** Each pose is still expressed in that drone's own EKF origin, set
+  wherever it first got a good GPS fix, so the four frames are not comparable yet. The shared
+  `swarm_origin` shift is not implemented — until it is, `frame_id` is left exactly as MAVROS set it
+  rather than claiming to be `swarm_origin`. The node logs this warning on startup.
+
+- **`swarm_nodes/teleop_velocity.py`** → `ros2 run swarm_nodes teleop_velocity`
+  Keyboard velocity teleop for a single drone, for bench and SITL testing. Publishes a
+  `TwistStamped` to `<drone_id>/mavros/setpoint_velocity/cmd_vel` while a key is held:
+  `w`/`s` for ±x, `a`/`d` for ∓y, `q`/`e` for ∓z, left/right arrows for yaw rate.
+  Parameters: `drone_id` (**required**, e.g. `drone1`), `speed` (0.5 m/s), `yaw_rate` (0.5 rad/s),
+  `rate_hz` (20), `hold_timeout` (0.5 s).
+
+  ```bash
+  ros2 run swarm_nodes teleop_velocity --ros-args -p drone_id:=drone1
+  ```
+
+  Two things to know before using it. **The axes are world ENU, not body** — MAVROS interprets the
+  twist in the world frame regardless of `header.frame_id`, so `w` means *east*, not *forward*, no
+  matter where the drone is pointing. And it publishes **straight to MAVROS with no speed clamp and
+  no watchdog**; it is a test tool, not the velocity interface the formation controller will use.
+  Run it in SITL first, and on a real aircraft only with an RC safety pilot and the geofence on.
+
 - **`setup.py` / `package.xml`** — console-script entry points and dependencies (`rclpy`,
   `sensor_msgs`, `geometry_msgs`, `nav_msgs`, `mavros_msgs`).
 
