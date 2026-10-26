@@ -39,6 +39,12 @@ and listens on port 14555.
   The `DRONES` list at the top of the file is the single place to edit when a drone's IP or sysid
   changes.
 
+- **`launch/mavros_sitl_x4.launch.py`** — the same four MAVROS instances pointed at ArduPilot SITL
+  on localhost instead of the ESP8266 bridges, using the sysids SITL assigns with `--auto-sysid`
+  (1–4) rather than the aircraft's own. Connects to SITL's TCP ports 5760–5790 by default; pass
+  `use_mavproxy:=true` to use UDP 14551–14554 instead, when SITL is running with MAVProxy
+  forwarding. See [Simulation](#simulation-ardupilot-sitl--gazebo).
+
 - **`config/swarm_pluginlists.yaml`** — MAVROS plugin allowlist. It denies `*` and then allows only
   the eleven plugins the platform actually uses: `sys_status`, `sys_time`, `command`, `imu`,
   `local_position`, `global_position`, `setpoint_velocity`, `setpoint_raw`, `param`, `gps_rtk` and
@@ -115,6 +121,52 @@ and listens on port 14555.
 
 All three nodes subscribe with `qos_profile_sensor_data` (best-effort), matching the QoS that MAVROS
 publishes its sensor topics with.
+
+## Simulation (ArduPilot SITL + Gazebo)
+
+The four aircraft can be replaced by ArduPilot SITL, which is useful because
+`--auto-offset-line` spawns each copter with **its own EKF origin** — the same frame mismatch you
+get outdoors, reproducible on a laptop without flying.
+
+Gazebo runs in the `humble` container (that's where `gz` and the headers are); ArduPilot SITL runs
+on the host (its binary is built against the host's glibc). They reach each other over localhost
+because the container shares the host network namespace.
+
+| Instance | sysid | FDM (SITL↔gz) | MAVLink TCP |
+| -------- | ----- | ------------- | ----------- |
+| `-I0`    | 1     | 9002 / 9003   | 5760        |
+| `-I1`    | 2     | 9012 / 9013   | 5770        |
+| `-I2`    | 3     | 9022 / 9023   | 5780        |
+| `-I3`    | 4     | 9032 / 9033   | 5790        |
+
+One-time setup of the ArduPilot↔Gazebo bridge plugin, **inside the container**:
+
+```bash
+mkdir -p ~/gz_ws/src && cd ~/gz_ws/src
+git clone https://github.com/ArduPilot/ardupilot_gazebo.git
+cd ardupilot_gazebo && export GZ_VERSION=harmonic
+cmake -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo && cmake --build build -j$(nproc)
+```
+
+`GZ_SIM_SYSTEM_PLUGIN_PATH` must contain `.../ardupilot_gazebo/build`, and `GZ_SIM_RESOURCE_PATH`
+its `models` and `worlds` directories. Verify one vehicle works before trying four.
+
+Then, on the host:
+
+```bash
+cd ~/ardupilot
+./Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON \
+    --count 4 --auto-sysid --auto-offset-line 90,10 -L CMAC --no-mavproxy
+```
+
+And in the container, in place of `mavros_x4.launch.py`:
+
+```bash
+ros2 launch swarm_bringup mavros_sitl_x4.launch.py
+```
+
+Everything downstream — `odom_relay`, `link_monitor`, `orientation_monitor`, `teleop_velocity` —
+works unchanged against the simulator, because the namespaces and topic names are identical.
 
 ## Build and run
 
