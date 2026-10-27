@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
@@ -19,15 +17,15 @@ class PublishPoseNode(Node):
         self.publisher = []
 
         for i in range(1, self.AMOUNT+1):
-            self.subscribe_to_pose_ = self.create_subscription(Odometry, f"/drone{i}/mavros/local_position/odom", partial(self.read_pose, id_arg = i), qos_profile_sensor_data)
+            self.subscribe_to_pose_ = self.create_subscription(Odometry, f"/drone{i}/mavros/local_position/odom", partial(self.read_pose, drone_id = i), qos_profile_sensor_data)
             self.publisher_ = self.create_publisher(Odometry, f"/drone{i}/nav_msgs/Odometry", qos_profile_sensor_data)
             self.subscribers.append(self.subscribe_to_pose_)
             self.publisher.append(self.publisher_)
 
         self.timer = self.create_timer(self.FRECUENCY, self.timer_callback)
 
-    def read_pose(self, msg, id_arg):
-        self.messages[id_arg] = msg
+    def read_pose(self, msg, drone_id):
+        self.messages[drone_id] = msg
 
     def timer_callback(self):
         for keys in self.messages.keys():

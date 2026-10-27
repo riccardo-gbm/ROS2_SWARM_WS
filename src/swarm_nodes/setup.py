@@ -11,7 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', "pygame"],
     zip_safe=True,
     maintainer='ricardo07',
     maintainer_email='ricardocango2007@gmail.com',
@@ -27,9 +27,10 @@ setup(
             'link_monitor = swarm_nodes.link_monitor:main',
             'first_flight = swarm_nodes.first_flight:main',
             'orientation_monitor = swarm_nodes.orientation_monitor:main',
-            'fetch_pose = swarm_nodes.fetch_pose:main'
+            'fetch_pose = swarm_nodes.fetch_pose:main',
             'stream_setup = swarm_nodes.stream_setup:main',
-            "teleop_velocity = swarm_nodes.teleop_velocity:main"
+            "teleop_velocity = swarm_nodes.teleop_velocity:main",
+            "set_common_origin = swarm_nodes.set_common_origin:main" 
         ],
     },
 )

@@ -1,0 +1,21 @@
+[1.011s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data
+[1.357s] running develop
+[1.569s] running egg_info
+[1.569s] writing swarm_nodes.egg-info/PKG-INFO
+[1.570s] writing dependency_links to swarm_nodes.egg-info/dependency_links.txt
+[1.570s] writing entry points to swarm_nodes.egg-info/entry_points.txt
+[1.570s] writing requirements to swarm_nodes.egg-info/requires.txt
+[1.571s] writing top-level names to swarm_nodes.egg-info/top_level.txt
+[1.574s] reading manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+[1.575s] writing manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+[1.577s] running build_ext
+[1.577s] Creating /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages/swarm-nodes.egg-link (link to .)
+[1.579s] Installing fetch_pose = swarm_nodes.fetch_pose:mainstream_setup script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.579s] Installing first_flight script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.579s] Installing link_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.579s] Installing orientation_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.580s] Installing teleop_velocity = swarm_nodes.teleop_velocity:mainset_common_origin script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.580s] 
+[1.580s] Installed /home/a/ROS2_SWARM_WS/build/swarm_nodes
+[1.580s] running symlink_data
+[1.620s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes' returned '0': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data

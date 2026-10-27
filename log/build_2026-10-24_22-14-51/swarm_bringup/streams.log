@@ -1,0 +1,16 @@
+[0.961s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages:/home/a/ROS2_SWARM_WS/build/swarm_nodes:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data
+[1.245s] running develop
+[1.411s] running egg_info
+[1.411s] writing swarm_bringup.egg-info/PKG-INFO
+[1.412s] writing dependency_links to swarm_bringup.egg-info/dependency_links.txt
+[1.412s] writing entry points to swarm_bringup.egg-info/entry_points.txt
+[1.412s] writing requirements to swarm_bringup.egg-info/requires.txt
+[1.412s] writing top-level names to swarm_bringup.egg-info/top_level.txt
+[1.414s] reading manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[1.415s] writing manifest file 'swarm_bringup.egg-info/SOURCES.txt'
+[1.417s] running build_ext
+[1.417s] Creating /home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages/swarm-bringup.egg-link (link to .)
+[1.419s] 
+[1.419s] Installed /home/a/ROS2_SWARM_WS/build/swarm_bringup
+[1.419s] running symlink_data
+[1.450s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_bringup' returned '0': PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_bringup/lib/python3.10/site-packages:/home/a/ROS2_SWARM_WS/build/swarm_nodes:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_bringup/build --no-deps symlink_data

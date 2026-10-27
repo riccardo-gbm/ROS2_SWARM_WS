@@ -1,1 +1,0 @@
-/home/a/ROS2_SWARM_WS/src/build/swarm_bringup/launch/mavros_x4.launch.py

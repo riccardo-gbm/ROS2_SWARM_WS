@@ -1,0 +1,23 @@
+[1.210s] Invoking command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes': PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/home/a/ROS2_SWARM_WS/.venv/lib/python3.10/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /home/a/ROS2_SWARM_WS/.venv/bin/python -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data
+[1.567s] running develop
+[1.774s] running egg_info
+[1.790s] writing swarm_nodes.egg-info/PKG-INFO
+[1.791s] writing dependency_links to swarm_nodes.egg-info/dependency_links.txt
+[1.792s] writing entry points to swarm_nodes.egg-info/entry_points.txt
+[1.792s] writing requirements to swarm_nodes.egg-info/requires.txt
+[1.792s] writing top-level names to swarm_nodes.egg-info/top_level.txt
+[1.833s] reading manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+[1.836s] writing manifest file 'swarm_nodes.egg-info/SOURCES.txt'
+[1.855s] running build_ext
+[1.855s] Creating /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages/swarm-nodes.egg-link (link to .)
+[1.856s] Installing fetch_pose script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.857s] Installing first_flight script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.857s] Installing link_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.858s] Installing orientation_monitor script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.858s] Installing set_common_origin script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.858s] Installing stream_setup script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.859s] Installing teleop_velocity script to /home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/swarm_nodes
+[1.859s] 
+[1.859s] Installed /home/a/ROS2_SWARM_WS/build/swarm_nodes
+[1.859s] running symlink_data
+[1.901s] Invoked command in '/home/a/ROS2_SWARM_WS/build/swarm_nodes' returned '0': PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/a/ROS2_SWARM_WS/build/swarm_nodes/prefix_override:/home/a/ROS2_SWARM_WS/.venv/lib/python3.10/site-packages/colcon_core/task/python/colcon_distutils_commands:/home/a/ROS2_SWARM_WS/install/swarm_nodes/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /home/a/ROS2_SWARM_WS/.venv/bin/python -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/a/ROS2_SWARM_WS/build/swarm_nodes/build --no-deps symlink_data
