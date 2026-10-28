@@ -1,119 +1,134 @@
+"""Keyboard velocity teleop for one drone, for bench and SITL testing.
+
+Publishes a TwistStamped to <drone_id>/mavros/setpoint_velocity/cmd_vel while a key is held.
+
+    w / s   +x / -x        a / d   -y / +y        q / e   -z / +z
+    left / right arrow     yaw rate              Ctrl-C  quit
+
+AXES ARE WORLD ENU, NOT BODY. MAVROS interprets this twist in the world frame regardless of
+header.frame_id, so +x is EAST and +y is NORTH -- "w" does not mean "forward" and does not depend on
+where the drone is pointing.
+
+SAFETY: this goes straight to MAVROS with no speed clamp and no watchdog, and it is not the velocity
+interface the formation controller will use. Run it in SITL first, and on a real aircraft only with
+an RC safety pilot on the sticks and the geofence enabled.
+"""
+import select
+import sys
+import termios
+import time
+import tty
+
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import qos_profile_system_default
-from rclpy.qos import qos_profile_sensor_data
 from geometry_msgs.msg import TwistStamped
-from geometry_msgs.msg import PoseStamped
-import pygame
 
-class TeleopVelocityCommand(Node):
+INPUT_POLL_HZ = 100.0
 
+
+class TeleopVelocity(Node):
     def __init__(self):
-        super().__init__("teleop_velocity")
+        super().__init__('teleop_velocity')
+        drone_id = self.declare_parameter('drone_id', '').value
+        self.speed = self.declare_parameter('speed', 0.5).value
+        self.yaw_rate = self.declare_parameter('yaw_rate', 0.5).value
+        rate_hz = self.declare_parameter('rate_hz', 20.0).value
+        self.hold_timeout = self.declare_parameter('hold_timeout', 0.5).value
 
-        # Velocity at which inputs will be processed and velocity commands sent.
-        self.INPUT_FRECUENCY = 1/50
+        if not drone_id:
+            raise ValueError(
+                'drone_id is required, e.g. --ros-args -p drone_id:=drone1')
+        drone_id = '/' + drone_id.strip('/')
 
-        # Pygame constants and parameters, used for the GUI.
-        self.WINDOW_WIDTH = 900
-        self.WINDOW_HEIGHT = 700
-        self.VERTICAL_WINDOW_WIDTH = 300
-        self.WINDOW_WIDTH_CENTER = (self.WINDOW_WIDTH - self.VERTICAL_WINDOW_WIDTH) / 2
-        self.WINDOW_HEIGHT_CENTER = self.WINDOW_HEIGHT / 2
-        self.VERTICAL_WINDOW_WIDTH_CENTER = self.WINDOW_WIDTH - (self.VERTICAL_WINDOW_WIDTH / 2)
-        self.METER_TO_PIXEL = 10
-        self.RED = (255, 0, 0)
-        self.GREEN = (0, 255, 0)
-        self.WHITE = (255, 255, 255)
-        self.current_x = 0
-        self.current_y = 0
-        self.current_z = 0
+        self.msg = TwistStamped()
+        self.last_key = 0.0
 
-        pygame.init()
-        self.screen = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
+        topic = f'{drone_id}/mavros/setpoint_velocity/cmd_vel'
+        self.publisher = self.create_publisher(
+            TwistStamped, topic, qos_profile_system_default)
 
-        pygame.display.set_caption("Controller")
+        self.create_timer(1.0 / INPUT_POLL_HZ, self.read_key)
+        self.create_timer(1.0 / rate_hz, self.publish_command)
 
-        self.declare_parameter("drone_id", "")
-        self.drone_id = self.get_parameter("drone_id").value
-        
-        if self.drone_id:
-            self.drone_id = "/" + self.drone_id
+        self.get_logger().info(
+            f'{topic} at {rate_hz:.0f} Hz, {self.speed} m/s, {self.yaw_rate} rad/s')
+        self.get_logger().warn(
+            'axes are world ENU: w = EAST, a/d = north/south, NOT body-relative. '
+            'No clamp and no watchdog -- SITL or RC safety pilot only.')
 
-        self.pose_subscriber = self.create_subscription(PoseStamped, f"{self.drone_id}/mavros/local_position/pose", self.pose_callback, qos_profile_sensor_data)
+    def stop(self):
+        self.msg.twist.linear.x = 0.0
+        self.msg.twist.linear.y = 0.0
+        self.msg.twist.linear.z = 0.0
+        self.msg.twist.angular.z = 0.0
 
-        self.msg = TwistStamped()     
+    def read_key(self):
+        readable, _, _ = select.select([sys.stdin], [], [], 0)
+        if not readable:
+            # Terminal key-repeat is far slower than this timer, so hold the last command briefly
+            # instead of zeroing between repeats, which would make a held key stutter.
+            if time.monotonic() - self.last_key > self.hold_timeout:
+                self.stop()
+            return
 
-        self.publisher_vel_command = self.create_publisher(TwistStamped, f"{self.drone_id}/mavros/setpoint_velocity/cmd_vel", qos_profile_system_default)
+        key = sys.stdin.read(1)
+        if key == '\x1b':  # escape sequence: arrow keys arrive as ESC [ A-D
+            key = (key + sys.stdin.read(2))[-1]
+        if key == '\x03':  # Ctrl-C, delivered as a byte because the terminal is raw
+            raise KeyboardInterrupt
 
-        self.timer = self.create_timer(self.INPUT_FRECUENCY, self.user_input_to_command)
+        self.last_key = time.monotonic()
+        self.stop()
+        match key:
+            case 'w':
+                self.msg.twist.linear.x = self.speed
+            case 's':
+                self.msg.twist.linear.x = -self.speed
+            case 'd':
+                self.msg.twist.linear.y = self.speed
+            case 'a':
+                self.msg.twist.linear.y = -self.speed
+            case 'e':
+                self.msg.twist.linear.z = self.speed
+            case 'q':
+                self.msg.twist.linear.z = -self.speed
+            case 'C':
+                self.msg.twist.angular.z = -self.yaw_rate
+            case 'D':
+                self.msg.twist.angular.z = self.yaw_rate
 
-    def user_input_to_command(self):
-
-        self.screen.fill((0, 0, 0))
-        pygame.draw.rect(self.screen, self.WHITE, (self.WINDOW_WIDTH-self.VERTICAL_WINDOW_WIDTH, 0, 1, self.WINDOW_HEIGHT))
-        pygame.draw.rect(self.screen, self.GREEN, (self.WINDOW_WIDTH_CENTER, self.WINDOW_HEIGHT_CENTER, 10, 10))
-        pygame.draw.rect(self.screen, self.RED, (self.current_x, self.current_y, 10, 10))
-        pygame.draw.rect(self.screen, self.RED, (self.VERTICAL_WINDOW_WIDTH_CENTER, self.current_z, 10, 10))
-
-        pygame.display.flip()
-
-        pressed_keys = pygame.key.get_pressed()
-
-        x = 0.0
-        y = 0.0
-        z = 0.0
-        r = 0.0
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
-
-        if pressed_keys[pygame.K_w]:
-            x += 1
-        if pressed_keys[pygame.K_s]:
-            x -= 1
-        if pressed_keys[pygame.K_d]:
-          y += 1
-        if pressed_keys[pygame.K_a]:
-            y -= 1
-        if pressed_keys[pygame.K_e]:
-            z += 1
-        if pressed_keys[pygame.K_q]:
-            z -= 1
-        if pressed_keys[pygame.K_RIGHT]:
-            r -= 1
-        if pressed_keys[pygame.K_LEFT]:
-            r += 1
-
-        self.msg.twist.linear.x = x
-        self.msg.twist.linear.y = y
-        self.msg.twist.linear.z = z
-        self.msg.twist.angular.z = r
-        
+    def publish_command(self):
+        # frame_id is deliberately left empty: MAVROS ignores it and uses the world frame, so
+        # naming a body frame here would be a lie.
         self.msg.header.stamp = self.get_clock().now().to_msg()
-        self.msg.header.frame_id = "base_link"
+        self.publisher.publish(self.msg)
 
-        self.publisher_vel_command.publish(self.msg)
 
-    def pose_callback(self, msg):
-    
-        self.current_y = int(-(msg.pose.position.x * self.METER_TO_PIXEL) + self.WINDOW_HEIGHT_CENTER)
-        self.current_x = int((msg.pose.position.y * self.METER_TO_PIXEL) + self.WINDOW_WIDTH_CENTER)
-        self.current_z = int(-(msg.pose.position.z * self.METER_TO_PIXEL) + self.WINDOW_HEIGHT-5)
+def main():
+    if not sys.stdin.isatty():
+        print('teleop_velocity needs a terminal to read keys from', file=sys.stderr)
+        return
 
-def main(args=None):
-
+    rclpy.init()
+    node = None
+    fd = sys.stdin.fileno()
+    settings = termios.tcgetattr(fd)
     try:
-        rclpy.init(args=args)
-        publish_velocity_command = TeleopVelocityCommand()  
-        rclpy.spin(publish_velocity_command)
-      
-    except Exception as error:
-        publish_velocity_command.get_logger().error(f"Exception in TeleopVelocityCommand: {error}")
+        node = TeleopVelocity()
+        tty.setraw(fd)
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    except ValueError as err:
+        print(f'teleop_velocity: {err}', file=sys.stderr)
     finally:
-        rclpy.shutdown()
+        # Runs on every exit path, including Ctrl-C, so the shell is never left in raw mode.
+        termios.tcsetattr(fd, termios.TCSADRAIN, settings)
+        if node is not None:
+            node.destroy_node()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == '__main__':

@@ -1,5 +1,0 @@
-setuptools
-pygame
-
-[test]
-pytest
