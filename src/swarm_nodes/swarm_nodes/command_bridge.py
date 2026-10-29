@@ -5,24 +5,33 @@ forwards it to /droneN/mavros/setpoint_velocity/cmd_vel_unstamped. Nothing else 
 allowed to command a drone directly -- this is the single place where speed limits and the
 loss-of-command behaviour live.
 
-A fixed-rate timer is correct here, unlike in odom_relay. ArduPilot stops a vehicle after 3 s
-without a new setpoint and expects at least 1 Hz, so the bridge has to keep sending even when the
-controller goes quiet. The rule is the mirror image of the telemetry one: never synthesize
-telemetry, always synthesize commands.
+A fixed-rate timer is correct here, unlike in odom_relay. ArduPilot halts a vehicle if setpoints
+stop arriving, so the bridge has to keep sending even when the controller goes quiet. The rule is
+the mirror image of the telemetry one: never synthesize telemetry, always synthesize commands.
 
 What happens when commands stop arriving:
 
-    age < stale_timeout      forward the clamped command
-    age < loiter_timeout     publish zero velocity -- hold position
-    age >= loiter_timeout    switch to the hold mode once, then stop streaming
+    age < stale_timeout     forward the clamped command
+    age >= stale_timeout    publish zero velocity -- stop and hold
 
-The hold mode is the loiter_mode parameter, LOITER by default. LOITER takes throttle from the RC,
-so without a pilot on the sticks the drone descends and lands; pass loiter_mode:=BRAKE for a hold
-that needs no pilot input.
+Normally that is the end of it. The drone stays in GUIDED holding position, and the moment the
+controller comes back it simply carries on, with no handover to redo.
 
-After a hold trip the bridge stays silent until the drone is put back into GUIDED, so regaining
-control is always a deliberate act. It also stays silent before the very first command, so it can
-never fight the mission node during arm and takeoff.
+ArduPilot has its own backstop underneath ours. After GUID_TIMEOUT seconds (a parameter, default
+3.0) with no new setpoint it zeroes the target itself and holds position AUTONOMOUSLY -- needing
+nothing from the ground station and nothing from a pilot. So if this node dies too, the drone still
+stops and holds. Our 0.5 s does the same thing 2.5 s sooner, which at 1 m/s is 2.5 m of
+uncommanded travel avoided. That is the whole value of the stale timeout, and it is real.
+
+Switching flight mode is OFF by default, because it is not an improvement on the above. It was in
+the original design and that was a mistake: taking the drone out of GUIDED moves it off a hold that
+already works by itself. Set hold_mode if you specifically want a deliberate re-entry to GUIDED
+before anything can command the drone again -- but know what each option costs:
+
+    BRAKE   holds position and altitude by itself, ignores the sticks. The safe choice if you
+            want the barrier.
+    LOITER  holds position, but takes CLIMB RATE from the pilot's throttle stick. With nobody on
+            the sticks it descends and lands, which is worse than simply staying in GUIDED.
 
 Twist is in world ENU (x = east, y = north, z = up), angular.z is yaw rate. MAVROS converts to NED.
 """
@@ -46,35 +55,31 @@ class CommandBridge(Node):
         # How often we send to the drone, in times per second.
         stream_hz = self.declare_parameter('stream_hz', 20.0).value
 
-        # Two timeouts, both in SECONDS, because a hiccup and a crash deserve different answers.
+        # Both timeouts are in SECONDS.
         #
-        #   0.5 s -- the controller skipped a few messages, or the network blipped.
-        #            Stop moving and wait. We stay in GUIDED, so the moment commands come back
-        #            the drone just keeps flying. Nothing to re-do.
-        #
-        #   2.0 s -- something is genuinely broken (controller crashed, laptop died).
-        #            Stop relying on the ground station and hand the drone to a holding mode.
-        #
-        # One timeout would force a bad choice: too short and every blip kicks you out of GUIDED,
-        # too long and a real crash leaves the drone coasting on an old command.
+        # stale_timeout -- how long we may keep flying on an out-of-date command. Short, because
+        # a stale velocity is a drone moving with nobody steering it.
         self.stale_timeout = self.declare_parameter('stale_timeout', 0.5).value
-        self.loiter_timeout = self.declare_parameter('loiter_timeout', 2.0).value
 
-        # Which mode to hand the drone to when commands stop for good.
+        # hold_mode -- which flight mode to hand the drone to once commands have stopped for
+        # hold_timeout seconds. EMPTY BY DEFAULT, meaning we never change mode: we just keep
+        # streaming zeros, the drone holds in GUIDED, and if this node dies ArduPilot's own
+        # GUID_TIMEOUT (default 3 s) takes over and holds it autonomously.
         #
-        #   LOITER holds position BUT takes throttle from the pilot's RC stick:
-        #     - safety pilot holding mid-throttle -> it hovers       <- the normal field case
-        #     - nobody on the sticks              -> it descends and lands
-        #       (that is what happened in simulation, where there is no transmitter at all)
-        #   BRAKE  holds position entirely on its own and ignores the sticks.
-        self.hold_mode = self.declare_parameter('loiter_mode', 'LOITER').value
+        # Set it only if you want to force a deliberate re-entry to GUIDED afterwards:
+        #   'BRAKE'   holds by itself, ignores the sticks        <- use this one
+        #   'LOITER'  takes climb rate from the pilot's throttle; with nobody holding it,
+        #             the drone descends and lands
+        self.hold_mode = self.declare_parameter('hold_mode', '').value
+        self.hold_timeout = self.declare_parameter('hold_timeout', 2.0).value
+
         self.max_xy = self.declare_parameter('max_xy_speed', 1.0).value
         self.max_z = self.declare_parameter('max_z_speed', 0.5).value
         self.max_yaw = self.declare_parameter('max_yaw_rate', 0.5).value
 
         self.last_cmd = {ns: None for ns in self.drone_ns}      # Twist, already clamped
         self.last_time = {ns: None for ns in self.drone_ns}     # seconds, monotonic-ish
-        self.loitered = {ns: False for ns in self.drone_ns}     # tripped, awaiting re-handover
+        self.handed_over = {ns: False for ns in self.drone_ns}  # mode switched, awaiting GUIDED
         self.mode = {ns: '' for ns in self.drone_ns}
 
         self.setpoint_pubs = {}
@@ -84,7 +89,8 @@ class CommandBridge(Node):
                 Twist, f'/{ns}/mavros/setpoint_velocity/cmd_vel_unstamped', 10)
             # A "client" is a phone line to a service on another node. Creating it does not do
             # anything yet -- it just sets up our ability to later ask MAVROS "put this drone in
-            # mode X". trip_loiter() below is what actually makes the call.
+            # mode X". hand_over() below is what actually makes the call, and only
+            # if hold_mode was set -- by default we never change mode at all.
             # (A topic is a broadcast: shout and move on. A service is a request: ask, get a reply.)
             self.mode_clients[ns] = self.create_client(SetMode, f'/{ns}/mavros/set_mode')
             self.create_subscription(Twist, f'/{ns}/cmd_vel',
@@ -97,16 +103,18 @@ class CommandBridge(Node):
         self.get_logger().info(
             f'bridging {len(self.drone_ns)} drones at {stream_hz:.0f} Hz | '
             f'limits {self.max_xy} m/s xy, {self.max_z} m/s z, {self.max_yaw} rad/s yaw | '
-            f'zero velocity after {self.stale_timeout}s, '
-            f'{self.hold_mode} after {self.loiter_timeout}s')
+            f'zero velocity after {self.stale_timeout}s, then '
+            + (f'{self.hold_mode} after {self.hold_timeout}s'
+               if self.hold_mode else
+               "hold in GUIDED (ArduPilot's GUID_TIMEOUT is the backstop)"))
 
     def now(self):
         return self.get_clock().now().nanoseconds * 1e-9
 
     def on_state(self, ns, msg):
-        # Returning to GUIDED is how the operator hands control back after a LOITER trip.
-        if self.loitered[ns] and msg.mode == 'GUIDED':
-            self.loitered[ns] = False
+        # Returning to GUIDED is how the operator hands control back after a mode switch.
+        if self.handed_over[ns] and msg.mode == 'GUIDED':
+            self.handed_over[ns] = False
             self.get_logger().info(f'{ns}: back in GUIDED, bridge re-armed')
         self.mode[ns] = msg.mode
 
@@ -154,7 +162,7 @@ class CommandBridge(Node):
         """
         for ns in self.drone_ns:
             last = self.last_time[ns]
-            if last is None or self.loitered[ns]:
+            if last is None or self.handed_over[ns]:
                 # Never been commanded (so stay quiet and let the mission node take off in
                 # peace), or already tripped and waiting to be put back in GUIDED.
                 continue
@@ -164,13 +172,17 @@ class CommandBridge(Node):
 
             if age < self.stale_timeout:
                 self.setpoint_pubs[ns].publish(self.last_cmd[ns])   # fresh -- fly it
-            elif age < self.loiter_timeout:
-                self.setpoint_pubs[ns].publish(ZERO)                # quiet briefly -- stop, wait
+            elif not self.hold_mode or age < self.hold_timeout:
+                # Stop and hold. With no hold_mode set this is where we stay: the drone holds in
+                # GUIDED, recoverable the instant commands resume.
+                self.setpoint_pubs[ns].publish(ZERO)
             else:
-                self.trip_loiter(ns, age)                           # quiet too long -- hand over
+                self.hand_over(ns, age)                             # opt-in mode switch
 
-    def trip_loiter(self, ns, age):
-        self.loitered[ns] = True
+    def hand_over(self, ns, age):
+        """Opt-in: take the drone out of GUIDED so it cannot be commanded without a deliberate
+        re-entry. Off unless hold_mode is set."""
+        self.handed_over[ns] = True
         self.get_logger().warn(
             f'{ns}: no command for {age:.1f}s, switching to {self.hold_mode}')
         client = self.mode_clients[ns]
