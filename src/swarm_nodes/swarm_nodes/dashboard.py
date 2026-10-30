@@ -21,6 +21,7 @@ buttons are for recovering a single drone mid-session.
 ROS spins in a background thread and the Qt timer reads the latest snapshot, so a stalled link
 never freezes the window.
 """
+import math
 import signal
 import sys
 import threading
@@ -44,6 +45,9 @@ from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
 NAMES = {'drone1': 'PAPOI', 'drone2': 'TRINEO', 'drone3': 'BISUU', 'drone4': 'LUCAS'}
 
 OK, WARN, BAD, DIM = '#2e7d32', '#ef6c00', '#c62828', '#757575'
+
+# Treat a drone as off the air if nothing has arrived for this long.
+STALE_AFTER = 3.0
 ROWS = ['link', 'mode', 'armed', 'gps', 'gps acc', 'battery', 'east', 'north', 'up', 'cmd age']
 
 # GPS_FIX_TYPE. Anything below RTK Fixed means the formation positions are not centimetre-accurate,
@@ -59,15 +63,19 @@ class SwarmMonitor(Node):
     def __init__(self, namespaces):
         super().__init__('dashboard')
         self.drone_ns = namespaces
+        # 4S LiPo defaults: 14.0 V is ~3.5 V/cell, 13.2 V is ~3.3 V/cell. Override for 6S.
+        self.warn_v = self.declare_parameter('battery_warn_v', 14.0).value
+        self.low_v = self.declare_parameter('battery_low_v', 13.2).value
         self.lock = threading.Lock()
         self.data = {ns: {'state': None, 'odom': None, 'battery': None, 'gps': None,
                           'odom_count': 0, 'odom_window': time.monotonic(),
-                          'odom_hz': None, 'last_cmd': None} for ns in namespaces}
+                          'odom_hz': None, 'last_cmd': None,
+                          'last_odom': None, 'last_state': None} for ns in namespaces}
 
         self.mode_cli, self.arm_cli, self.takeoff_cli, self.land_cli = {}, {}, {}, {}
         for ns in namespaces:
             self.create_subscription(State, f'/{ns}/mavros/state',
-                                     lambda m, ns=ns: self.put(ns, 'state', m),
+                                     lambda m, ns=ns: self.on_state(ns, m),
                                      qos_profile_sensor_data)
             self.create_subscription(BatteryState, f'/{ns}/mavros/battery',
                                      lambda m, ns=ns: self.put(ns, 'battery', m),
@@ -86,6 +94,11 @@ class SwarmMonitor(Node):
             self.takeoff_cli[ns] = self.create_client(CommandTOL, f'/{ns}/mavros/cmd/takeoff')
             self.land_cli[ns] = self.create_client(CommandTOL, f'/{ns}/mavros/cmd/land')
 
+    def on_state(self, ns, msg):
+        with self.lock:
+            self.data[ns]['state'] = msg
+            self.data[ns]['last_state'] = time.monotonic()
+
     def put(self, ns, key, value):
         # ROS messages arrive on a background thread while Qt draws on the main one, so every
         # read and write of self.data is wrapped in a lock to stop them tripping over each other.
@@ -96,6 +109,7 @@ class SwarmMonitor(Node):
         with self.lock:
             d = self.data[ns]
             d['odom'] = msg
+            d['last_odom'] = time.monotonic()
             d['odom_count'] += 1
             elapsed = time.monotonic() - d['odom_window']
             if elapsed >= 1.0:
@@ -229,6 +243,11 @@ class Dashboard(QWidget):
 
     # -- display ---------------------------------------------------------------
 
+    @staticmethod
+    def stale_for(stamp):
+        """Seconds since a message last arrived, or a big number if none ever did."""
+        return 1e9 if stamp is None else time.monotonic() - stamp
+
     def set(self, ns, row, text, colour=None):
         cell = self.cells[(ns, row)]
         cell.setText(text)
@@ -241,9 +260,13 @@ class Dashboard(QWidget):
         for ns, d in snap.items():
             state, odom, batt = d['state'], d['odom'], d['battery']
 
-            hz = d['odom_hz']
+            # A rate is only meaningful if messages are still arriving. Without this check a
+            # drone that drops off the network keeps displaying its last good rate indefinitely.
+            hz, silent = d['odom_hz'], self.stale_for(d['last_odom'])
             if hz is None:
                 self.set(ns, 'link', '—', DIM)
+            elif silent > STALE_AFTER:
+                self.set(ns, 'link', f'DEAD {silent:.0f}s', BAD)
             else:
                 self.set(ns, 'link', f'{hz:4.1f} Hz',
                          OK if hz >= 20 else WARN if hz >= 10 else BAD)
@@ -251,6 +274,9 @@ class Dashboard(QWidget):
             if state is None:
                 for row in ('mode', 'armed'):
                     self.set(ns, row, '—', DIM)
+            elif self.stale_for(d['last_state']) > STALE_AFTER:
+                self.set(ns, 'mode', 'NO DATA', BAD)
+                self.set(ns, 'armed', '?', BAD)
             else:
                 self.set(ns, 'mode', state.mode or '—',
                          OK if state.mode == 'GUIDED' else WARN)
@@ -273,12 +299,14 @@ class Dashboard(QWidget):
                 self.set(ns, 'gps acc', f'{gps.h_acc / 1000.0:5.2f} m',
                          OK if gps.h_acc <= 100 else WARN if gps.h_acc <= 1000 else BAD)
 
-            if batt is None:
+            if batt is None or not math.isfinite(batt.voltage):
                 self.set(ns, 'battery', '—', DIM)
             else:
-                pct = batt.percentage * 100.0 if batt.percentage <= 1.0 else batt.percentage
-                self.set(ns, 'battery', f'{batt.voltage:5.2f}V {pct:3.0f}%',
-                         OK if pct > 40 else WARN if pct > 20 else BAD)
+                # Voltage only. ArduPilot reports percentage as -1 unless BATT_CAPACITY is
+                # configured, which showed up as a red "-100%" -- worse than useless.
+                self.set(ns, 'battery', f'{batt.voltage:5.2f} V',
+                         OK if batt.voltage >= self.monitor.warn_v
+                         else WARN if batt.voltage >= self.monitor.low_v else BAD)
 
             if odom is None:
                 for row in ('east', 'north', 'up'):
