@@ -80,6 +80,7 @@ class CommandBridge(Node):
         self.last_cmd = {ns: None for ns in self.drone_ns}      # Twist, already clamped
         self.last_time = {ns: None for ns in self.drone_ns}     # seconds, monotonic-ish
         self.handed_over = {ns: False for ns in self.drone_ns}  # mode switched, awaiting GUIDED
+        self.handover_sent = {ns: False for ns in self.drone_ns}  # request in flight, don't spam
         self.mode = {ns: '' for ns in self.drone_ns}
 
         self.setpoint_pubs = {}
@@ -115,6 +116,7 @@ class CommandBridge(Node):
         # Returning to GUIDED is how the operator hands control back after a mode switch.
         if self.handed_over[ns] and msg.mode == 'GUIDED':
             self.handed_over[ns] = False
+            self.handover_sent[ns] = False
             self.get_logger().info(f'{ns}: back in GUIDED, bridge re-armed')
         self.mode[ns] = msg.mode
 
@@ -181,25 +183,36 @@ class CommandBridge(Node):
 
     def hand_over(self, ns, age):
         """Opt-in: take the drone out of GUIDED so it cannot be commanded without a deliberate
-        re-entry. Off unless hold_mode is set."""
-        self.handed_over[ns] = True
-        self.get_logger().warn(
-            f'{ns}: no command for {age:.1f}s, switching to {self.hold_mode}')
+        re-entry. Off unless hold_mode is set.
+
+        We only stop streaming once the mode change is CONFIRMED. If the request fails or is
+        refused we keep sending zeros, because going silent on a drone still in GUIDED would
+        leave it on nothing but ArduPilot's own timeout.
+        """
+        if self.handover_sent[ns]:
+            return                                  # request already in flight, don't spam at 20 Hz
         client = self.mode_clients[ns]
         if not client.service_is_ready():
             self.get_logger().error(
-                f'{ns}: set_mode service unavailable, could NOT switch to {self.hold_mode}')
-            return
+                f'{ns}: set_mode unavailable, cannot switch to {self.hold_mode}; '
+                f'holding on zero velocity instead', throttle_duration_sec=10.0)
+            return                                  # stream() keeps publishing zeros
+        self.handover_sent[ns] = True
+        self.get_logger().warn(
+            f'{ns}: no command for {age:.1f}s, switching to {self.hold_mode}')
         req = SetMode.Request()
         req.custom_mode = self.hold_mode
         future = client.call_async(req)
         future.add_done_callback(lambda f, ns=ns: self.on_mode_set(ns, f))
 
     def on_mode_set(self, ns, future):
+        self.handover_sent[ns] = False
         result = future.result()
         if result is None or not result.mode_sent:
-            self.get_logger().error(f'{ns}: {self.hold_mode} request was not accepted')
+            self.get_logger().error(
+                f'{ns}: {self.hold_mode} was refused; staying on zero velocity')
         else:
+            self.handed_over[ns] = True             # only now is it safe to stop streaming
             self.get_logger().info(f'{ns}: now in {self.hold_mode}, send GUIDED to resume')
 
 
