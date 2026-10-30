@@ -12,6 +12,8 @@ resource/swarm_nodes
 swarm_nodes/__init__.py
 swarm_nodes/first_flight.py
 swarm_nodes/link_monitor.py
+swarm_nodes/nodo_odometria.py
+swarm_nodes/nodo_velocidades.py
 swarm_nodes/odom_relay.py
 swarm_nodes/orientation_monitor.py
 swarm_nodes/stream_setup.py
